@@ -8,7 +8,6 @@
     "mcp": "coral mcp-stdio"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.24.0",
     "@linear/sdk": "^17.0.0",
     "@slack/web-api": "^6.12.0",
     "axios": "^1.7.2",
@@ -16,6 +15,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-rate-limit": "^7.3.1",
+    "groq-sdk": "^1.2.0",
     "helmet": "^7.1.0",
     "morgan": "^1.10.0",
     "node-cron": "^4.2.1",

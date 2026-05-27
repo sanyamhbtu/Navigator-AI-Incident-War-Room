@@ -1,14 +1,36 @@
-const { LinearClient } = require('@linear/sdk');
+// Linear service — lazy-initialised so missing LINEAR_API_KEY doesn't crash
+// the backend at startup. Each function throws on use if not configured.
 
-const linear = new LinearClient({ apiKey: process.env.LINEAR_API_KEY });
+const logger = require('../utils/logger');
+
+let linear = null;
+let initFailed = false;
+
+function getClient() {
+  if (linear) return linear;
+  if (initFailed) throw new Error('Linear not configured (LINEAR_API_KEY missing)');
+  if (!process.env.LINEAR_API_KEY) {
+    initFailed = true;
+    throw new Error('Linear not configured (LINEAR_API_KEY missing)');
+  }
+  try {
+    const { LinearClient } = require('@linear/sdk');
+    linear = new LinearClient({ apiKey: process.env.LINEAR_API_KEY });
+    return linear;
+  } catch (err) {
+    initFailed = true;
+    logger.warn(`[Linear] init failed: ${err.message}`);
+    throw err;
+  }
+}
 
 const TEAM_ID = process.env.LINEAR_TEAM_ID;
 
-// Create incident issue in Linear
 async function createIncidentIssue(incident, aiSummary) {
+  const client = getClient();
   const priorityMap = { P1: 1, P2: 2, P3: 3, P4: 4 };
 
-  const issue = await linear.createIssue({
+  const issue = await client.createIssue({
     teamId: TEAM_ID,
     title: `[INCIDENT] ${incident.title}`,
     description: `
@@ -22,51 +44,48 @@ async function createIncidentIssue(incident, aiSummary) {
 ## AI Analysis
 ${aiSummary}
 
-## Auto-created by Navigator Bot
+## Auto-created by Reef
     `.trim(),
     priority: priorityMap[incident.severity] || 2,
     labelIds: [],
-    estimate: incident.severity === 'P1' ? 8 : 3
+    estimate: incident.severity === 'P1' ? 8 : 3,
   });
 
   return issue.issue;
 }
 
-// Get open issues for a team
 async function getOpenIssues(limit = 50) {
-  const team = await linear.team(TEAM_ID);
+  const client = getClient();
+  const team = await client.team(TEAM_ID);
   const issues = await team.issues({
     filter: { state: { type: { in: ['started', 'unstarted', 'backlog'] } } },
     first: limit,
-    orderBy: 'updatedAt'
+    orderBy: 'updatedAt',
   });
   return issues.nodes;
 }
 
-// Get issue by ID
 async function getIssueById(issueId) {
-  return linear.issue(issueId);
+  return getClient().issue(issueId);
 }
 
-// Update issue status
 async function updateIssueStatus(issueId, stateName) {
-  const issue = await linear.issue(issueId);
-  const team = await linear.team(TEAM_ID);
+  const client = getClient();
+  await client.issue(issueId);
+  const team = await client.team(TEAM_ID);
   const states = await team.states();
-  const state = states.nodes.find(s => s.name.toLowerCase() === stateName.toLowerCase());
+  const state = states.nodes.find((s) => s.name.toLowerCase() === stateName.toLowerCase());
   if (!state) throw new Error(`State "${stateName}" not found`);
-
-  return linear.updateIssue(issueId, { stateId: state.id });
+  return client.updateIssue(issueId, { stateId: state.id });
 }
 
-// Add comment to an issue
 async function addComment(issueId, body) {
-  return linear.createComment({ issueId, body });
+  return getClient().createComment({ issueId, body });
 }
 
-// Get team members
 async function getTeamMembers() {
-  const team = await linear.team(TEAM_ID);
+  const client = getClient();
+  const team = await client.team(TEAM_ID);
   const members = await team.members();
   return members.nodes;
 }
@@ -77,5 +96,5 @@ module.exports = {
   getIssueById,
   updateIssueStatus,
   addComment,
-  getTeamMembers
+  getTeamMembers,
 };

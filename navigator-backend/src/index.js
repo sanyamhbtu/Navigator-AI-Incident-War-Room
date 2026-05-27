@@ -1,4 +1,11 @@
-require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
+
+// Load .env.local first if it exists (takes priority), then fallback to .env
+if (fs.existsSync(path.resolve(__dirname, '../.env.local'))) {
+  require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') });
+}
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -53,12 +60,15 @@ function broadcast(data) {
 
 app.set('broadcast', broadcast);
 
-// ─── Cron: poll PagerDuty every 60s and push live ─────────
-const pagerdutyService = require('./services/pagerduty');
+// ─── Cron: poll active incidents every 60s and push to WS clients ─────────
+// Uses Coral (fixtures or live, depending on CORAL_LIVE) so it works without
+// requiring real PagerDuty credentials.
+const { runCoralQuery } = require('./services/coral');
+const { ACTIVE_INCIDENTS_QUERY } = require('./utils/queries');
 
 cron.schedule('* * * * *', async () => {
   try {
-    const incidents = await pagerdutyService.getTriggeredIncidents();
+    const incidents = await runCoralQuery(ACTIVE_INCIDENTS_QUERY(50));
     broadcast({ type: 'INCIDENTS_UPDATE', data: incidents, ts: new Date().toISOString() });
   } catch (err) {
     logger.error('Cron poll error: ' + err.message);

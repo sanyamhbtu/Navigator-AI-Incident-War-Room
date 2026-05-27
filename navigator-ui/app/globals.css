@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Reef — Coral-inspired palette.
+   Warm dark base, sandy cream highlights, coral as the bold accent.
+   Inspired by withcoral.com — moody, photo-led, technical.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* Backgrounds — warm dark */
+  --color-bg: #0c0a08;
+  --color-panel: #161310;
+  --color-panel-2: #1f1a15;
+  --color-hover: #221d18;
+
+  /* Borders */
+  --color-border: #2a241e;
+  --color-border-muted: #1f1a15;
+  --color-border-strong: #3a3128;
+
+  /* Vibrant accents */
+  --color-coral: #ff6b3d;
+  --color-coral-soft: #ff8b65;
+  --color-yellow: #f7c948;
+  --color-teal: #4fd1c5;
+  --color-pink: #ff6bcb;
+  --color-lime: #c7f464;
+  --color-blue: #6ba7ff;
+  --color-purple: #b48aff;
+  --color-green: #4ade80;
+  --color-orange: #ff9847;
+  --color-red: #ff5454;
+
+  /* Text — warm */
+  --color-fg: #f5efe6;
+  --color-fg-muted: #a8a094;
+  --color-fg-subtle: #6e6960;
+
+  /* Fonts */
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+html, body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hard offset shadow — for CTAs */
+.brutal-shadow { box-shadow: 4px 4px 0 0 var(--color-coral); }
+.brutal-shadow-sm { box-shadow: 3px 3px 0 0 var(--color-coral); }
+.brutal-hover { transition: transform 0.15s, box-shadow 0.15s; }
+.brutal-hover:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 var(--color-coral); }
+
+/* Neumorphic surfaces — soft pillowy depth, no harsh borders */
+.neumorph-card {
+  background: linear-gradient(180deg, #1a1612 0%, #141110 100%);
+  border-radius: 18px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 230, 200, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    0 24px 64px -16px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 200, 150, 0.04);
+}
+.neumorph-inset {
+  background: linear-gradient(180deg, #100d0b 0%, #141110 100%);
+  border-radius: 12px;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(255, 200, 150, 0.02);
+}
+.neumorph-raised {
+  background: linear-gradient(180deg, #1c1814 0%, #161310 100%);
+  border-radius: 12px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 230, 200, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 200, 150, 0.03);
+}
+.neumorph-coral {
+  background: linear-gradient(180deg, rgba(255, 107, 61, 0.08) 0%, rgba(255, 107, 61, 0.02) 100%);
+  border-radius: 12px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 140, 100, 0.15),
+    inset 0 0 0 1px rgba(255, 107, 61, 0.15),
+    0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+::selection { background: var(--color-coral); color: var(--color-fg); }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 4px; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.pulse-dot { animation: pulse-dot 1.6s ease-in-out infinite; }
+
+/* Strikethrough with custom thickness for hero use */
+.strike-thick { text-decoration: line-through; text-decoration-thickness: 4px; text-decoration-color: rgba(255, 107, 61, 0.7); }

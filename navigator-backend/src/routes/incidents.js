@@ -3,22 +3,25 @@ const pagerduty = require('../services/pagerduty');
 const datadog   = require('../services/datadog');
 const sentry    = require('../services/sentry');
 const { runCoralQuery } = require('../services/coral');
-const { MASTER_INCIDENT_QUERY } = require('../utils/queries');
+const { ACTIVE_INCIDENTS_QUERY } = require('../utils/queries');
 const requireApiKey = require('../middleware/auth');
 const logger = require('../utils/logger');
 
-// GET /api/incidents — all active incidents with correlated data via Coral
+// GET /api/incidents — all active incidents (Coral primary, REST as live overlay)
 router.get('/', requireApiKey, async (req, res, next) => {
   try {
-    // Run Coral master query + live PagerDuty fetch in parallel
+    const limit = Math.min(parseInt(req.query.limit, 10) || 20, 100);
+
+    // Coral is the primary source; REST fetches stay as a live-data overlay
+    // for the war-room dashboard (monitors/sentry that aren't yet Coral'd).
     const [coralRows, liveIncidents, alertingMonitors, spikingErrors] = await Promise.all([
-      runCoralQuery(MASTER_INCIDENT_QUERY).catch(e => {
+      runCoralQuery(ACTIVE_INCIDENTS_QUERY(limit)).catch(e => {
         logger.warn('Coral query failed, falling back: ' + e.message);
         return [];
       }),
-      pagerduty.getTriggeredIncidents(),
-      datadog.getAlertingMonitors(),
-      sentry.getSpikingIssues(30)
+      pagerduty.getTriggeredIncidents().catch(() => []),
+      datadog.getAlertingMonitors().catch(() => []),
+      sentry.getSpikingIssues(30).catch(() => [])
     ]);
 
     res.json({

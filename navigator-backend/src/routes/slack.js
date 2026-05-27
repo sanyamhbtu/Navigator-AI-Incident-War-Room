@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const slackSvc  = require('../services/slack');
-const claude    = require('../services/claude');
+const llm       = require('../services/llm');
 const pagerduty = require('../services/pagerduty');
 const requireApiKey = require('../middleware/auth');
 
@@ -11,7 +11,7 @@ router.post('/post-brief', requireApiKey, async (req, res, next) => {
     if (!incident_id) return res.status(400).json({ error: 'incident_id required' });
 
     const incident = await pagerduty.getIncidentById(incident_id);
-    const aiSummary = await claude.generateIncidentBrief({ incident, commits: [], metrics: [], slackMessages: [], sentryIssues: [] });
+    const aiSummary = await llm.generateIncidentBrief({ incident, commits: [], metrics: [], slackMessages: [], sentryIssues: [] });
     const result = await slackSvc.postIncidentBrief(channel || process.env.SLACK_INCIDENT_CHANNEL, incident, aiSummary);
 
     res.json({ ok: true, ts: result.ts, channel: result.channel });
