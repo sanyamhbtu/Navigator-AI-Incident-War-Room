@@ -6,12 +6,12 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Reef — AI Incident War Room",
+  title: "Navigator — AI Incident War Room",
   description:
     "One Coral SQL query across PagerDuty, GitHub, Datadog, Sentry, Slack, and Linear. Llama 3.3 70B on Groq reads the result. Your on-call gets a brief in under fifteen seconds.",
   metadataBase: new URL("https://navigator-ui.vercel.app"),
   openGraph: {
-    title: "Reef — AI Incident War Room",
+    title: "Navigator — AI Incident War Room",
     description:
       "From alert to root cause in 12 seconds. Six tools, one SQL query.",
     type: "website",
