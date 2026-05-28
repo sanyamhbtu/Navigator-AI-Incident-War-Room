@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 import Link from "next/link";
 
-// Coral-inspired hero: full-bleed coral reef photograph behind the headline,
+// Coral-inspired hero: full-bleed coral Navigator photograph behind the headline,
 // dark warm overlay for legibility, code snippet floating on the right,
 // strikethrough word in the headline, and a stats bar at the bottom.
 // Hybrid: the bold borders/shadows come from neubrutalism.
@@ -15,12 +15,12 @@ export function Hero() {
       id="top"
       className="relative overflow-hidden border-b border-border"
     >
-      {/* Coral reef photograph as full-bleed background */}
+      {/* Coral reNavigatoref photograph as full-bleed background */}
       <div className="absolute inset-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=2000&q=80&auto=format&fit=crop"
-          alt="Coral reef"
+          alt="Coral Navigator"
           className="absolute inset-0 w-full h-full object-cover"
           loading="eager"
         />
@@ -37,7 +37,7 @@ export function Hero() {
           transition={{ duration: 0.4 }}
           className="mb-8 text-[13px] text-fg-muted font-medium tracking-tight"
         >
-          <span className="text-coral">Reef</span>
+          <span className="text-coral">Navigator</span>
           <span className="mx-2 text-fg-subtle">/</span>
           <span>An AI Incident War Room, built for the Coral Hackathon</span>
         </motion.div>
@@ -63,7 +63,7 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.12 }}
               className="mt-7 text-lg text-fg-muted leading-[1.55] max-w-lg"
             >
-              Reef runs one Coral SQL query across PagerDuty, GitHub,
+              Navigator runs one Coral SQL query across PagerDuty, GitHub,
               Datadog, Sentry, Slack, and Linear. Groq reads the JOIN. Your
               on-call gets a brief — no ETL, no glue code, no dashboards.
             </motion.p>
@@ -113,7 +113,7 @@ export function Hero() {
       >
         <div className="max-w-6xl mx-auto px-6 py-6 grid sm:grid-cols-[1fr_auto_auto] gap-6 items-center">
           <p className="text-sm text-fg-muted">
-            With Reef, your on-call gets to root cause
+            With Navigator, your on-call gets to root cause
           </p>
           <StatChip direction="up" value="150×" label="faster than tabs" />
           <StatChip direction="down" value="6→1" label="tools to read" />
@@ -165,7 +165,7 @@ function DashboardMockup() {
             <span className="size-2.5 rounded-full bg-green/50" />
           </div>
           <span className="text-[11px] font-mono text-fg-subtle">
-            reef · war-room
+            Navigator · war-room
           </span>
           <div className="flex items-center gap-1.5 text-[11px] font-mono text-coral">
             <span className="size-1.5 rounded-full bg-coral pulse-dot" />

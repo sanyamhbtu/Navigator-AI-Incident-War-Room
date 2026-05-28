@@ -130,7 +130,7 @@ export function Dashboard() {
       <div className="neumorph-card px-5 py-3 mb-6 flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center gap-3">
           <span className="text-base">🪸</span>
-          <span className="font-semibold text-sm">Reef</span>
+          <span className="font-semibold text-sm">Navigator</span>
           <span className="text-fg-subtle text-sm">/</span>
           <span className="text-sm text-fg-muted">War room</span>
         </div>
@@ -360,7 +360,7 @@ function NoSelection() {
       </div>
       <h3 className="text-lg font-semibold mb-2">Select an incident</h3>
       <p className="text-sm text-fg-muted max-w-sm leading-relaxed">
-        Reef runs one Coral query across six tools and hands the result to
+        Navigator runs one Coral query across six tools and hands the result to
         Llama 3.3 70B on Groq. Pick an incident from the sidebar to investigate.
       </p>
     </motion.div>
@@ -423,7 +423,7 @@ function ErrorState({
         <span className="text-sm font-semibold">Investigation failed</span>
       </div>
       <p className="text-sm text-fg-muted mb-2">
-        Reef could not reach the backend or Groq.
+        Navigator could not reach the backend or Groq.
       </p>
       <pre className="neumorph-inset p-3 text-[11px] font-mono text-fg leading-relaxed overflow-x-auto whitespace-pre-wrap">
         {error}

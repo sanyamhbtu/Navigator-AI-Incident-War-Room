@@ -5,13 +5,13 @@ import { Lock, Key, Gauge, Crosshair } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 // "Built for production agent workloads" — Coral's 4-column production-grade
-// feature cards. We translate to Reef's incident triage capabilities.
+// feature cards. We translate to Navigator's incident triage capabilities.
 
 const FEATURES: { icon: LucideIcon; title: string; body: string }[] = [
   {
     icon: Lock,
     title: "Read-only by design",
-    body: "Reef only reads from your APIs. No writes, no destructive operations. Safe to point at production.",
+    body: "Navigator only reads from your APIs. No writes, no destructive operations. Safe to point at production.",
   },
   {
     icon: Key,

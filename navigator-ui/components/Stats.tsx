@@ -25,7 +25,7 @@ export function Stats() {
               </span>
             </h2>
             <p className="mt-6 text-base text-fg-muted leading-relaxed max-w-lg">
-              We measured Reef against a control group running incident
+              We measured Navigator against a control group running incident
               triage the old way — tabs, dashboards, and timestamp correlation.
               Same incidents, same on-call rotation, same SLA targets.
             </p>

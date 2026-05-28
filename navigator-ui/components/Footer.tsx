@@ -12,7 +12,7 @@ export function Footer() {
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-base">🪸</span>
-                <span className="font-semibold text-sm">Reef</span>
+                <span className="font-semibold text-sm">Navigator</span>
               </div>
               <p className="text-xs text-fg-subtle leading-relaxed max-w-[200px]">
                 Built for the Coral Hackathon 2026 · Enterprise Agent track.
@@ -80,7 +80,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-6 border-t border-border-muted text-[11px] font-mono text-fg-subtle flex flex-col sm:flex-row gap-2 justify-between">
-          <span>© 2026 Reef</span>
+          <span>© 2026 Navigator</span>
           <span>Find the culprit before dawn.</span>
         </div>
       </div>

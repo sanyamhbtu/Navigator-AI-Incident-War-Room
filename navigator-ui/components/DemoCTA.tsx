@@ -62,7 +62,7 @@ export function DemoCTA() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/coral.png"
-                alt="Coral reef"
+                alt="Coral Navigator"
                 className="w-56 sm:w-64 lg:w-72 h-auto opacity-80"
                 loading="lazy"
               />

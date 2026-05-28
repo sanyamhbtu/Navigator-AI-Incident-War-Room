@@ -25,7 +25,7 @@ export function Nav() {
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
           <span className="text-lg">🪸</span>
-          <span className="font-semibold text-sm tracking-tight">Reef</span>
+          <span className="font-semibold text-sm tracking-tight">Navigator</span>
         </Link>
 
         <div className="flex items-center gap-1">

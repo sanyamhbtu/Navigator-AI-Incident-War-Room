@@ -241,7 +241,7 @@ function IdleState() {
         Select an incident to investigate
       </h3>
       <p className="text-sm text-fg-muted max-w-sm leading-relaxed">
-        Reef runs one Coral query, hands the JOINed result to Claude, and
+        Navigator runs one Coral query, hands the JOINed result to Claude, and
         returns a structured brief in under twelve seconds.
       </p>
     </motion.div>
